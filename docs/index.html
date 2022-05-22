@@ -20,24 +20,24 @@
     />
     <link
       rel="stylesheet"
-      href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/vue.css"
+      href="//unpkg.com/docsify@4/themes/vue.css"
       title="vue"
     />
     <link
       rel="stylesheet"
-      href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/dark.css"
+      href="//unpkg.com/docsify@4/themes/dark.css"
       title="dark"
       disabled
     />
     <link
       rel="stylesheet"
-      href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/buble.css"
+      href="//unpkg.com/docsify@4/themes/buble.css"
       title="buble"
       disabled
     />
     <link
       rel="stylesheet"
-      href="//cdn.jsdelivr.net/npm/docsify@4/lib/themes/pure.css"
+      href="//unpkg.com/docsify@4/themes/pure.css"
       title="pure"
       disabled
     />
@@ -55,7 +55,7 @@
 
   <body>
     <div id="app">Loading ...</div>
-    <script src="//cdn.jsdelivr.net/npm/docsify-plugin-carbon@1/index.js"></script>
+    <script src="//unpkg.com/docsify-plugin-carbon@1/index.js"></script>
     <script>
       // Set html "lang" attribute based on URL
       var lang = location.hash.match(/#\/(de-de|es|ru-ru|zh-cn)\//);
@@ -79,7 +79,7 @@
           '/ru-ru/(.*)':
             'https://raw.githubusercontent.com/docsifyjs/docs-ru/master/$1',
           '/zh-cn/(.*)':
-            'https://cdn.jsdelivr.net/gh/docsifyjs/docs-zh@master/$1',
+            'https://raw.githubusercontent.com/docsifyjs/docs-zh/master/$1',
         },
         auto2top: true,
         coverpage: true,
@@ -204,19 +204,19 @@
                 }
                 return (
                   html +
-                  '<br/> <i>Vercel</i> has given us a Pro account <br/> <a href="https://vercel.com/?utm_source=docsifyjsdocs" target="_blank"><img src="https://cdn.jsdelivr.net/gh/docsifyjs/docsify/docs/_media/vercel_logo.svg" alt="Vercel" width="100" height="64"></a>'
+                  '<br/> <i>Vercel</i> has given us a Pro account <br/> <a href="https://vercel.com/?utm_source=docsifyjsdocs" target="_blank"><img src="https://raw.githubusercontent.com/docsifyjs/docsify/master/docs/_media/vercel_logo.svg" alt="Vercel" width="100" height="64"></a>'
                 );
               });
           },
         ],
       };
     </script>
-    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/docsify.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/search.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-bash.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-markdown.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-nginx.min.js"></script>
-    <script src="//cdn.jsdelivr.net/npm/prismjs@1/components/prism-php.min.js"></script>
+    <script src="//unpkg.com/docsify@4/lib/docsify.min.js"></script>
+    <script src="//unpkg.com/docsify@4/lib/plugins/search.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-bash.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-markdown.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-nginx.min.js"></script>
+    <script src="//unpkg.com/prismjs/components/prism-php.min.js"></script>
     <script>
       (function() {
         function loadJS(src, attrs) {
@@ -227,12 +227,12 @@
 
         // Public site only
         if (/docsify/.test(location.host)) {
-          loadJS('//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/ga.min.js');
-          loadJS('//cdn.jsdelivr.net/npm/docsify@4/lib/plugins/matomo.min.js');
+          loadJS('//unpkg.com/docsify@4/lib/plugins/ga.min.js');
+          loadJS('//unpkg.com/docsify@4/lib/plugins/matomo.min.js');
         }
       })();
     </script>
-    <script src="//cdn.jsdelivr.net/npm/vue@2/dist/vue.min.js"></script>
-    <!-- <script src="//cdn.jsdelivr.net/npm/vue@3/dist/vue.global.prod.js"></script> -->
+    <script src="//unpkg.com/vue@2/dist/vue.min.js"></script>
+    <!-- <script src="//unpkg.com/vue@3/dist/vue.global.prod.js"></script> -->
   </body>
 </html>
