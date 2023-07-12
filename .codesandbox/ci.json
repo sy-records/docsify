@@ -1,5 +1,4 @@
 {
   "sandboxes": ["2d17z"],
-  "installCommand": "init-dep",
-  "node": "16"
+  "node": "18"
 }
