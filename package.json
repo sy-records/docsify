@@ -51,7 +51,7 @@
     "test": "jest && run-s test:e2e",
     "watch:css": "npm run css -- -o themes -w",
     "watch:js": "node build/build.js",
-    "install": "npm install"
+    "install": "npm install && npm rum build"
   },
   "husky": {
     "hooks": {
