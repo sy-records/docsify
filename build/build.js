@@ -81,7 +81,7 @@ async function buildAllPlugin() {
     {name: 'ga', input: 'ga.js'},
     {name: 'gtag', input: 'gtag.js'},
     {name: 'matomo', input: 'matomo.js'},
-   // {name: 'emoji', input: 'emoji.js'},
+    {name: 'emoji', input: 'emoji.js'},
     {name: 'external-script', input: 'external-script.js'},
     {name: 'front-matter', input: 'front-matter/index.js'},
     {name: 'zoom-image', input: 'zoom-image.js'},
