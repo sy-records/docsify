@@ -52,8 +52,7 @@
     "test:unit": "jest --selectProjects unit",
     "test": "jest && run-s test:e2e",
     "watch:css": "npm run css -- -o themes -w",
-    "watch:js": "node build/build.js",
-    "init-dep": "npm install"
+    "watch:js": "node build/build.js"
   },
   "husky": {
     "hooks": {
