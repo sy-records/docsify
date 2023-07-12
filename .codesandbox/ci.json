@@ -1,5 +1,5 @@
 {
   "sandboxes": ["2d17z"],
-  "installCommand": "install",
+  "installCommand": "run install",
   "node": "16"
 }
