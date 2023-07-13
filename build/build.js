@@ -96,6 +96,16 @@ async function buildAllPlugin() {
     })
   })
 
+  if (isProd) {
+    plugins.forEach(item => {
+      promises.push(build({
+        input: 'src/plugins/' + item.input,
+        output: 'plugins/' + item.name + '.min.js',
+        plugins: [uglify()]
+      }))
+    })
+  }
+
   await Promise.all(promises)
 }
 
