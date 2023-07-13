@@ -88,7 +88,7 @@ async function buildAllPlugin() {
     {name: 'disqus', input: 'disqus.js'},
     {name: 'gitalk', input: 'gitalk.js'}
   ]
-  exit
+
   const promises = plugins.map(item => {
     return build({
       input: 'src/plugins/' + item.input,
