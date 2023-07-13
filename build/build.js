@@ -5,6 +5,7 @@ const nodeResolve = require('rollup-plugin-node-resolve')
 const { uglify } = require('rollup-plugin-uglify')
 const replace = require('rollup-plugin-replace')
 const isProd = process.env.NODE_ENV === 'production'
+const isWatch = process.env.NODE_ENV === 'watch'
 const version = process.env.VERSION || require('../package.json').version
 const chokidar = require('chokidar')
 const path = require('path')
@@ -110,7 +111,7 @@ async function buildAllPlugin() {
 }
 
 async function main() {
-  if (!isProd) {
+  if (isWatch) {
     chokidar
       .watch(['src/core', 'src/plugins'], {
         atomic: true,
