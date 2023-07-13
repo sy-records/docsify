@@ -1,5 +1,4 @@
 {
-  "installCommand": false,
   "buildCommand": false,
   "sandboxes": ["2d17z"],
   "node": "16"
