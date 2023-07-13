@@ -1,5 +1,5 @@
 {
-  "installCommand": "install",
+  "installCommand": false,
   "buildCommand": "prepare:ci",
   "sandboxes": ["2d17z"],
   "node": "16"
