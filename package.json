@@ -27,7 +27,7 @@
     "build:js": "node build/build.js",
     "build:js:min": "cross-env NODE_ENV=production node build/build.js",
     "build:test": "npm run build && npm test",
-    "build": "rimraf lib themes && run-s build:js build:js:min build:css build:css:min build:cover build:emoji",
+    "build": "rimraf lib themes && run-s build:js build:css build:css:min build:cover build:emoji",
     "css": "node build/css",
     "dev": "run-p serve watch:*",
     "docker:build:test": "npm run docker:cli -- build:test",
