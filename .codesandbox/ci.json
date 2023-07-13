@@ -1,5 +1,5 @@
 {
   "sandboxes": ["2d17z"],
-  "buildCommand": "build:ci",
+  "buildCommand": "prepare:ci",
   "node": "16"
 }
