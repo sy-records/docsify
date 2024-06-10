@@ -27,7 +27,7 @@ jobs:
         id: auto-commit-action
         uses: stefanzweifel/git-auto-commit-action@v5
         with:
-          commit_message: "chore: Sync emoji data with GitHub emoji API"
+          commit_message: 'chore: Sync emoji data with GitHub emoji API'
           branch: sync-emoji
           create_branch: true
           file_pattern: |
@@ -39,8 +39,8 @@ jobs:
         id: create-pull-request
         uses: peter-evans/create-pull-request@v6
         with:
-          title: "chore: Sync emoji data with GitHub emoji API"
-          body: "Found updated github emojis need to sync."
+          title: 'chore: Sync emoji data with GitHub emoji API'
+          body: 'Found updated github emojis need to sync.'
           team-reviewers: reviewers
           branch: sync-emoji
 
