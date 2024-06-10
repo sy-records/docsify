@@ -30,6 +30,7 @@ jobs:
           commit_message: 'chore: Sync emoji data with GitHub emoji API'
           branch: sync-emoji
           create_branch: true
+          skip_dirty_check: true
           file_pattern: 'src/core/render/emoji-data.js docs/emoji.md'
 
       - name: Create Pull Request
