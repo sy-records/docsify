@@ -7,14 +7,6 @@
 export default {
   "baseURL": "https://github.githubassets.com/images/icons/emoji/",
   "data": {
-    "100": "unicode/1f4af.png?v8",
-    "1234": "unicode/1f522.png?v8",
-    "+1": "unicode/1f44d.png?v8",
-    "-1": "unicode/1f44e.png?v8",
-    "1st_place_medal": "unicode/1f947.png?v8",
-    "2nd_place_medal": "unicode/1f948.png?v8",
-    "3rd_place_medal": "unicode/1f949.png?v8",
-    "8ball": "unicode/1f3b1.png?v8",
     "a": "unicode/1f170.png?v8",
     "ab": "unicode/1f18e.png?v8",
     "abacus": "unicode/1f9ee.png?v8",
