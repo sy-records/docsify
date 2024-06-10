@@ -8,7 +8,6 @@ on:
 
 jobs:
   sync-emoji:
-    if: github.repository == 'docsifyjs/docsify'
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
