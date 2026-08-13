@@ -70,6 +70,43 @@ test.describe('Sidebar Tests', () => {
   });
 });
 
+test.describe('Mobile sidebar toggle', () => {
+  test('wraps long links without causing horizontal overflow', async ({
+    page,
+  }) => {
+    await page.setViewportSize({ width: 390, height: 844 });
+
+    const longUrl = `https://example.com/${'a'.repeat(240)}`;
+    const content = Array.from(
+      { length: 80 },
+      (_, index) => `## Section ${index + 1}\n\nLong content for scrolling.`,
+    ).join('\n\n');
+
+    await docsifyInit({
+      config: {
+        loadSidebar: '_sidebar.md',
+      },
+      markdown: {
+        homepage: `# Mobile scrolling\n\n${content}\n\n[${longUrl}](${longUrl})`,
+        sidebar: '- [Mobile scrolling](README.md)',
+      },
+      styleURLs: ['/dist/themes/core.css'],
+    });
+
+    await expect
+      .poll(() => page.evaluate(() => document.documentElement.scrollWidth))
+      .toBe(page.viewportSize().width);
+
+    await page.mouse.wheel(0, 1200);
+    await expect
+      .poll(() => page.evaluate(() => window.scrollY))
+      .toBeGreaterThan(0);
+
+    await page.mouse.wheel(0, -1200);
+    await expect.poll(() => page.evaluate(() => window.scrollY)).toBe(0);
+  });
+});
+
 test.describe('Configuration: autoHeader', () => {
   test('autoHeader=false', async ({ page }) => {
     const docsifyInitConfig = {
