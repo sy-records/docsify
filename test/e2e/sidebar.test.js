@@ -69,6 +69,225 @@ test.describe('Sidebar Tests', () => {
     expect(page.url()).toMatch(/\/test%3Efoo$/);
   });
 
+  test('collapses root sidebar groups', async ({ page }) => {
+    await docsifyInit({
+      styleURLs: ['/dist/themes/core.css'],
+      markdown: {
+        sidebar: `
+          - Getting started
+            - [Quick start](quickstart)
+          - Customization
+            - [Configuration](configuration)
+          - Standalone
+          - [Linked group](linked)
+            - [Linked child](linked-child)
+        `,
+      },
+      routes: {
+        '/quickstart.md': '# Quick start',
+        '/configuration.md': '# Configuration',
+        '/linked.md': '# Linked group',
+        '/linked-child.md': '# Linked child',
+      },
+    });
+
+    const group = page.locator('.sidebar-nav > ul > li').first();
+    const groupTitle = group.locator(':scope > p.group-title');
+    const childLink = group.locator(':scope > ul > li > a');
+
+    await expect(groupTitle).toHaveAttribute('role', 'button');
+    await expect(groupTitle).toHaveAttribute('tabindex', '0');
+    await expect(groupTitle).toHaveAttribute('aria-expanded', 'true');
+    await expect(childLink).toBeVisible();
+
+    const standalone = page.locator('.sidebar-nav > ul > li').nth(2);
+    await expect(standalone).not.toHaveClass(/group/);
+    await expect(standalone.locator('[role="button"]')).toHaveCount(0);
+
+    const linkedGroup = page.locator('.sidebar-nav > ul > li').nth(3);
+    const linkedGroupLink = linkedGroup.locator('a').first();
+    await expect(linkedGroupLink).toHaveAttribute('href', '#/linked');
+
+    await groupTitle.click();
+
+    await expect(group).toHaveClass(/collapse/);
+    await expect(groupTitle).toHaveAttribute('aria-expanded', 'false');
+    await expect(childLink).toBeHidden();
+
+    await linkedGroupLink.click();
+    expect(page.url()).toMatch(/\/linked$/);
+    await expect(group).toHaveClass(/collapse/);
+    await expect(groupTitle).toHaveAttribute('aria-expanded', 'false');
+    await expect(childLink).toBeHidden();
+
+    await groupTitle.press('Enter');
+
+    await expect(group).not.toHaveClass(/collapse/);
+    await expect(groupTitle).toHaveAttribute('aria-expanded', 'true');
+    await expect(childLink).toBeVisible();
+
+    await groupTitle.press('Space');
+    await expect(group).toHaveClass(/collapse/);
+    await groupTitle.press('Space');
+    await expect(group).not.toHaveClass(/collapse/);
+  });
+
+  test('initially collapses root sidebar groups when configured', async ({
+    page,
+  }) => {
+    await docsifyInit({
+      config: {
+        collapseSidebarGroups: true,
+      },
+      styleURLs: ['/dist/themes/core.css'],
+      markdown: {
+        sidebar: `
+          - Getting started
+            - [Quick start](quickstart)
+          - Customization
+            - [Configuration](configuration)
+          - [Standalone](standalone)
+        `,
+      },
+      routes: {
+        '/quickstart.md': '# Quick start',
+        '/configuration.md': '# Configuration',
+        '/standalone.md': '# Standalone',
+      },
+    });
+
+    const groups = page.locator('.sidebar-nav > ul > li.group');
+    const firstGroup = groups.first();
+    const firstGroupTitle = firstGroup.locator(':scope > .group-title');
+    const firstGroupLink = firstGroup.locator(':scope > ul > li > a');
+    const secondGroup = groups.nth(1);
+
+    await expect(groups).toHaveCount(2);
+    await expect(firstGroup).toHaveClass(/collapse/);
+    await expect(secondGroup).toHaveClass(/collapse/);
+    await expect(firstGroupTitle).toHaveAttribute('aria-expanded', 'false');
+    await expect(firstGroupLink).toBeHidden();
+
+    await firstGroupTitle.click();
+    await expect(firstGroup).not.toHaveClass(/collapse/);
+    await firstGroupLink.click();
+
+    expect(page.url()).toMatch(/\/quickstart$/);
+    await expect(firstGroup).not.toHaveClass(/collapse/);
+    await expect(firstGroupTitle).toHaveAttribute('aria-expanded', 'true');
+    await expect(secondGroup).toHaveClass(/collapse/);
+  });
+
+  test('supports chevrons on collapsible root groups', async ({ page }) => {
+    await docsifyInit({
+      styleURLs: ['/dist/themes/core.css'],
+      style: `
+        :root:has(body[class*='sidebar-chevron']) {
+          --sidebar-chevron-collapsed-color: rgb(1, 2, 3);
+          --sidebar-chevron-expanded-color: rgb(4, 5, 6);
+        }
+      `,
+      html: `
+        <!DOCTYPE html>
+        <html>
+          <head><meta charset="UTF-8" /></head>
+          <body class="sidebar-chevron-right">
+            <div id="app"></div>
+          </body>
+        </html>
+      `,
+      markdown: {
+        sidebar: `
+          - Getting started
+            - [Quick start](quickstart)
+          - [Standalone](standalone)
+        `,
+      },
+      routes: {
+        '/quickstart.md': '# Quick start',
+        '/standalone.md': '# Standalone',
+      },
+    });
+
+    const groupTitle = page.locator('.group-title[role="button"]');
+    const standaloneLink = page.locator('a[href="#/standalone"]');
+    const background = await groupTitle.evaluate(
+      element => getComputedStyle(element).backgroundImage,
+    );
+    const [groupTitleBox, standaloneLinkBox] = await Promise.all([
+      groupTitle.boundingBox(),
+      standaloneLink.boundingBox(),
+    ]);
+
+    expect(background).not.toBe('none');
+    expect(background).toMatch(/rgb\(1,\s*2,\s*3\)/);
+    expect(background).not.toMatch(/rgb\(4,\s*5,\s*6\)/);
+    expect(groupTitleBox?.x + groupTitleBox?.width).toBe(
+      standaloneLinkBox?.x + standaloneLinkBox?.width,
+    );
+    await groupTitle.click();
+
+    await expect(groupTitle).toHaveAttribute('aria-expanded', 'false');
+    const collapsedBackground = await groupTitle.evaluate(
+      element => getComputedStyle(element).backgroundImage,
+    );
+    expect(collapsedBackground).not.toBe(background);
+    expect(collapsedBackground).toMatch(/rgb\(1,\s*2,\s*3\)/);
+    expect(collapsedBackground).not.toMatch(/rgb\(4,\s*5,\s*6\)/);
+  });
+
+  test('keeps group border spacing when the last group collapses', async ({
+    page,
+  }) => {
+    await docsifyInit({
+      styleURLs: ['/dist/themes/core.css'],
+      html: `
+        <!DOCTYPE html>
+        <html>
+          <head><meta charset="UTF-8" /></head>
+          <body class="sidebar-group-box">
+            <div id="app"></div>
+          </body>
+        </html>
+      `,
+      markdown: {
+        sidebar: `
+          - Upgrading
+            - [v4 to v5](upgrade)
+
+          * [Awesome docsify](awesome)
+        `,
+      },
+      routes: {
+        '/upgrade.md': '# v4 to v5',
+        '/awesome.md': '# Awesome docsify',
+      },
+    });
+
+    const upgradingGroup = page.locator(
+      '.sidebar-nav > ul:first-of-type > li:last-child',
+    );
+    const groupTitle = upgradingGroup.locator(':scope > .group-title');
+
+    await groupTitle.click();
+
+    const spacing = await page.evaluate(() => {
+      const title = document.querySelector('.group-title');
+      const group = title.closest('li');
+      const awesome = document.querySelector('a[href="#/awesome"]');
+      const titleBox = title.getBoundingClientRect();
+      const groupBox = group.getBoundingClientRect();
+      const awesomeBox = awesome.getBoundingClientRect();
+
+      return {
+        borderToAwesome: awesomeBox.top - groupBox.bottom,
+        titleToBorder: groupBox.bottom - titleBox.bottom,
+      };
+    });
+
+    expect(spacing.titleToBorder).toBeGreaterThan(spacing.borderToAwesome);
+  });
+
   test('keeps a loose-list page link visible when collapsed', async ({
     page,
   }) => {
