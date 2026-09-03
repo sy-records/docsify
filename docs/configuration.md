@@ -1,6 +1,22 @@
 # Configuration
 
-You can configure Docsify by defining `window.$docsify` as an object:
+The recommended way to configure and start Docsify is to import the ES module
+from a CDN and create a new `Docsify` instance:
+
+```html
+<script type="module">
+  import { Docsify } from '//cdn.jsdelivr.net/npm/docsify@5/dist/docsify.module.min.js';
+
+  new Docsify({
+    repo: 'docsifyjs/docsify',
+    maxLevel: 3,
+    coverpage: true,
+  });
+</script>
+```
+
+If you load the classic Docsify script instead, you can configure Docsify by
+defining `window.$docsify` as an object:
 
 ```html
 <script>
