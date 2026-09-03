@@ -1,7 +1,19 @@
 # Configuration
 
-The recommended way to configure and start Docsify is to import the ES module
-from a CDN and create a new `Docsify` instance:
+You can configure Docsify by defining `window.$docsify` as an object:
+
+```html
+<script>
+  window.$docsify = {
+    repo: 'docsifyjs/docsify',
+    maxLevel: 3,
+    coverpage: true,
+  };
+</script>
+```
+
+Docsify is also available as an ES module. Import `Docsify` from a CDN and pass
+the configuration object to a new `Docsify` instance:
 
 ```html
 <script type="module">
@@ -12,19 +24,6 @@ from a CDN and create a new `Docsify` instance:
     maxLevel: 3,
     coverpage: true,
   });
-</script>
-```
-
-If you load the classic Docsify script instead, you can configure Docsify by
-defining `window.$docsify` as an object:
-
-```html
-<script>
-  window.$docsify = {
-    repo: 'docsifyjs/docsify',
-    maxLevel: 3,
-    coverpage: true,
-  };
 </script>
 ```
 
