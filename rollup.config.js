@@ -21,7 +21,7 @@ const docsifyConfig = {
 const docsifyEsmConfig = {
   inputPath: 'src/core/module.js',
   outputDir: 'dist',
-  outputName: 'docsify.esm',
+  outputName: 'docsify.module',
   title: 'Docsify',
   format: 'es',
 };

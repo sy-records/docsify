@@ -26,8 +26,7 @@ await import('prismjs');
 // Prism being global is not statically analyzable by the ES Module system so it
 // will try to execute Docsify's graph before prism.js has finished executed.
 // This is very odd, I didn't think this was possible.
-const { Compiler, Docsify, dom, get, marked, prism, slugify, util, version } =
-  await import('docsify');
+const { Docsify } = await import('docsify');
 
 const d = new Docsify({
   el: '#app',
@@ -41,7 +40,6 @@ const d = new Docsify({
 });
 
 console.log(d);
-console.log(Compiler, dom, get, marked, prism, slugify, util, version);
 
 // @ts-expect-error global types not available to ESM
 window.Docsify;
